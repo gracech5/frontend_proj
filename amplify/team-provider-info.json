@@ -17,6 +17,12 @@
       },
       "storage": {
         "imagebuckets3": {}
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d1phsw40bqzex9",
+          "type": "cicd"
+        }
       }
     }
   }

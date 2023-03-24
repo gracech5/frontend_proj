@@ -2,12 +2,32 @@ import logo from './logo.svg';
 import './App.css';
 import React, { useEffect, useRef, useState } from 'react';
 import { Camera } from "react-camera-pro";
+import { Storage } from 'aws-amplify'
 
 function App() {
   const camera = useRef(null);
   const [numberOfCameras, setNumberOfCameras] = useState(0);
   const [image, setImage] = useState(null);
   const [nutri, setNutri] = useState("a");
+
+  async function uploadImageToS3(image) {
+    const fileName = `testing_${new Date().getTime()}.jpeg`;
+  
+    try {
+      const result = await Storage.put(fileName, image, {
+        contentType: 'image/jpeg'
+      });
+  
+      console.log('Uploaded file: ', result);
+  
+      return result.key;
+    } catch (error) {
+      console.error('Error uploading file: ', error);
+    }
+  }
+
+
+
   return (
     <div className="App">
       <header className="App-header">
@@ -38,6 +58,7 @@ function App() {
         <button
           class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           onClick={() => {
+            uploadImageToS3(image);
             console.log(
               JSON.stringify({ b64: image })
             )

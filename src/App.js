@@ -62,7 +62,7 @@ function App() {
             console.log(
               JSON.stringify({ b64: image })
             )
-            fetch("http://13.215.207.98:8000/ocrb64", {
+            fetch("https://cd9ohognje.execute-api.ap-southeast-1.amazonaws.com/ocrb64", {
               method: "POST",
               body: JSON.stringify({ b64: image }),
               headers: {
